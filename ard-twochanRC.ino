@@ -8,11 +8,10 @@
  */
 
 // Controller pins
-const int CH_1_PIN = 10;
-const int CH_2_PIN = 11;
+const int CH_1_PIN = 9;
+const int CH_2_PIN = 10;
 
 // Motor driver pins
-const int STBY_PIN = 9;
 const int AIN1_PIN = 7;
 const int AIN2_PIN = 6;
 const int APWM_PIN = 5;
@@ -21,6 +20,7 @@ const int BIN2_PIN = 2;
 const int BPWM_PIN = 3;
 
 // Parameters
+
 const int deadzone = 20;  // Anything between -20 and 20 is stop
 
 void setup() {
@@ -31,6 +31,7 @@ void setup() {
   pinMode(BIN1_PIN, OUTPUT);
   pinMode(BIN2_PIN, OUTPUT);
   pinMode(BPWM_PIN, OUTPUT);
+  Serial.begin(9600); 
 }
 
 void loop() {
@@ -45,6 +46,8 @@ void loop() {
   int right = y - x;
   // Drive motor
   drive(left, right);
+  //Serial.println(left);
+  //Serial.println(right);
   delay(5);
 }
 
@@ -83,8 +86,8 @@ void drive(int speed_a, int speed_b) {
 // Convert RC pulse value to motor PWM value
 int pulseToPWM(int pulse) {
    // If we're receiving numbers, convert them to motor PWM
-  if ( pulse > 1000 ) {
-    pulse = map(pulse, 1000, 2000, -500, 500);
+  if ( pulse > 990 ) {
+    pulse = map(pulse, 990, 1987, -500, 500);
     pulse = constrain(pulse, -255, 255);
   } else {
     pulse = 0;
